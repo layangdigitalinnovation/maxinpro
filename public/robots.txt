@@ -1,0 +1,22 @@
+User-agent: *
+
+# Internal panels and personal account pages must never be indexed.
+Disallow: /admin
+Disallow: /agent
+Disallow: /account
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+
+# Filtered/sorted listing URLs create near-duplicate pages; let crawlers focus
+# on the canonical listing pages and the individual property detail pages.
+Disallow: /*?sort=
+Disallow: /*?type=
+Disallow: /*?price_min=
+Disallow: /*?price_max=
+Disallow: /*?bedrooms=
+
+Allow: /
+
+Sitemap: https://maxinpro.com/sitemap.xml

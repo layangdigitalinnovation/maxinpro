@@ -1,0 +1,63 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - storage_data:/var/www/html/storage
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks: [maxinpro]
+
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./public:/var/www/html/public:ro
+      - storage_data:/var/www/html/storage:ro
+    depends_on: [app]
+    networks: [maxinpro]
+
+  mysql:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks: [maxinpro]
+
+  queue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: php artisan queue:work --sleep=3 --tries=3
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - storage_data:/var/www/html/storage
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks: [maxinpro]
+
+networks:
+  maxinpro:
+
+volumes:
+  mysql_data:
+  storage_data:

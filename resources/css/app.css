@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-brand-soft text-brand-ink antialiased selection:bg-brand-blue selection:text-white;
+    }
+    /* Modern Inputs */
+    input[type="text"], input[type="email"], input[type="number"], input[type="password"], textarea, select {
+        @apply border-brand-line bg-white shadow-sm transition-all duration-200 outline-none;
+    }
+    input:focus, textarea:focus, select:focus {
+        @apply border-brand-blue ring-4 ring-brand-blue/20;
+    }
+
+    /* Soft Buttons */
+    button, .btn, a.inline-flex {
+        @apply transition-all duration-200 active:scale-[0.97];
+    }
+    
+    /* Elegant Tables */
+    th {
+        @apply text-brand-muted uppercase tracking-wider text-[11px] font-black bg-white;
+    }
+    td {
+        @apply border-b border-brand-line/40 transition-colors duration-200;
+    }
+    tbody tr:hover td {
+        @apply bg-brand-soft/40;
+    }
+}
+
+@layer components {
+    /* Glass/Soft Card overriding */
+    .bg-white.rounded-2xl {
+        @apply border-brand-line/80 rounded-[20px] shadow-soft transition-all duration-300;
+    }
+    .bg-white.rounded-2xl:hover {
+        @apply shadow-soft-hover border-brand-line;
+    }
+}
