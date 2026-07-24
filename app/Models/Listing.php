@@ -17,7 +17,7 @@ class Listing extends Model
     protected $fillable = [
         'title', 'slug', 'description', 'property_type_id', 'area_id', 'agent_id',
         'address', 'price', 'land_area', 'building_area', 'bedrooms', 'bathrooms',
-        'car_ports', 'badge', 'status', 'cover_image', 'is_featured', 'published_at',
+        'car_ports', 'badge', 'status', 'cover_image', 'youtube_url', 'is_featured', 'published_at',
     ];
 
     protected $casts = [

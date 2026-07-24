@@ -59,8 +59,14 @@
 
 <div class="max-w-[1280px] mx-auto px-8 mt-4 grid grid-cols-1 min-[900px]:grid-cols-[1.6fr_1fr] gap-8 items-start">
     <div>
-        <div class="rounded-2xl overflow-hidden aspect-[1.8/1] bg-brand-soft mb-5">
+        <div class="rounded-2xl overflow-hidden aspect-[1.8/1] bg-brand-soft mb-5 relative">
             <img src="<?php echo e($listing->cover_image ? asset('storage/'.$listing->cover_image) : asset('images/placeholder-property.jpg')); ?>" alt="<?php echo e($listing->title); ?>" class="w-full h-full object-cover">
+            <?php if($listing->youtube_url): ?>
+                <a href="<?php echo e($listing->youtube_url); ?>" target="_blank" class="absolute bottom-4 right-4 bg-white hover:bg-gray-50 text-brand-navy font-extrabold text-[13px] py-2 px-4 rounded-lg shadow-md flex items-center gap-2 transition-colors">
+                    <svg class="w-4 h-4 text-[#0069ff]" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+                    Video
+                </a>
+            <?php endif; ?>
         </div>
 
         <?php if($listing->images->isNotEmpty()): ?>

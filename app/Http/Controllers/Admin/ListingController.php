@@ -149,6 +149,7 @@ class ListingController extends Controller
             'badge' => ['nullable', 'in:Terpopuler,Baru,Premium'],
             'status' => ['required', 'in:active,sold,hidden'],
             'cover_image' => ['nullable', 'image', 'max:2048'],
+            'youtube_url' => ['nullable', 'url', 'max:255'],
         ]);
 
         // Merge computed values last so they always win over raw validated input.

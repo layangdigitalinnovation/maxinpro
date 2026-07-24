@@ -133,14 +133,54 @@
 
         <div>
             <label class="block text-sm font-bold text-brand-navy mb-2">Cover Image (Gambar Utama)</label>
-            <input type="file" name="cover_image" accept="image/*" class="w-full border border-brand-line rounded-lg px-4 py-2 focus:ring-brand-blue">
-            <div class="text-xs text-gray-500 mt-1">Maksimal 2MB. Kosongkan jika tidak ingin mengubah (saat edit).</div>
+            <div id="dropzone-cover" class="relative w-full border-2 border-dashed border-brand-line rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:border-brand-blue hover:bg-blue-50/50 transition-all bg-gray-50 overflow-hidden group">
+                <input type="file" id="cover_image_input" name="cover_image" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
+                
+                <div id="cover-placeholder" class="flex flex-col items-center {{ $listing->exists && $listing->cover_image ? 'hidden' : '' }}">
+                    <div class="text-brand-blue mb-3 bg-white p-3 rounded-full shadow-sm border border-brand-line">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <p class="text-[13px] font-bold text-brand-navy mb-1"><span class="text-brand-blue underline">Pilih file</span> atau tarik dan lepas di sini</p>
+                    <p class="text-[11px] text-[#7a8399]">PNG, JPG, JPEG (Maks. 2MB)</p>
+                </div>
+                
+                <div id="cover-preview-container" class="w-full relative aspect-[2/1] rounded-lg overflow-hidden border border-brand-line {{ $listing->exists && $listing->cover_image ? '' : 'hidden' }}">
+                    <img id="cover-preview-img" src="{{ $listing->exists && $listing->cover_image ? asset('storage/'.$listing->cover_image) : '' }}" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                        <span class="text-white text-xs font-bold bg-black/60 px-3 py-1.5 rounded-md flex items-center gap-1.5">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                            Ganti Gambar
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="text-xs text-gray-500 mt-2">Maksimal 2MB. Kosongkan jika tidak ingin mengubah (saat edit).</div>
         </div>
 
         <div>
-            <label class="block text-sm font-bold text-brand-navy mb-2">Gallery Images (Bisa pilih lebih dari satu)</label>
-            <input type="file" name="images[]" accept="image/*" multiple class="w-full border border-brand-line rounded-lg px-4 py-2 focus:ring-brand-blue">
-            <div class="text-xs text-gray-500 mt-1">Maksimal 2MB per gambar.</div>
+            <label class="block text-sm font-bold text-brand-navy mb-2">Upload Gallery Images Baru (Bisa pilih lebih dari satu)</label>
+            <div id="dropzone-gallery" class="relative w-full border-2 border-dashed border-brand-line rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:border-brand-blue hover:bg-blue-50/50 transition-all bg-gray-50 min-h-[160px]">
+                <input type="file" id="gallery_images_input" name="images[]" accept="image/*" multiple class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
+                
+                <div id="gallery-placeholder" class="flex flex-col items-center pointer-events-none">
+                    <div class="text-brand-blue mb-3 bg-white p-3 rounded-full shadow-sm border border-brand-line">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                    </div>
+                    <p class="text-[13px] font-bold text-brand-navy mb-1"><span class="text-brand-blue underline">Pilih beberapa file</span> atau tarik dan lepas di sini</p>
+                    <p class="text-[11px] text-[#7a8399]">PNG, JPG, JPEG (Maks. 2MB per gambar)</p>
+                </div>
+                
+                <div id="gallery-preview-container" class="w-full hidden grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 mt-4 relative z-10 pointer-events-none">
+                    <!-- Previews injected via JS -->
+                </div>
+            </div>
+            <div class="text-xs text-gray-500 mt-2">Maksimal 2MB per gambar. Memilih file baru akan menggantikan pilihan file sebelumnya di input ini.</div>
+        </div>
+
+        <div class="col-span-1">
+            <label class="block text-sm font-bold text-brand-navy mb-2">URL Video YouTube (Opsional)</label>
+            <input type="url" name="youtube_url" value="{{ old('youtube_url', $listing->youtube_url) }}" placeholder="https://www.youtube.com/watch?v=..." class="w-full border border-brand-line rounded-lg px-4 py-2 focus:ring-brand-blue">
+            <div class="text-xs text-gray-500 mt-1">Contoh: https://www.youtube.com/watch?v=dQw4w9WgXcQ</div>
         </div>
 
         @if($listing->exists && $listing->images->count())
@@ -171,4 +211,89 @@
         </button>
     </div>
 </form>
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cover Image Preview
+        const coverInput = document.getElementById('cover_image_input');
+        const coverPlaceholder = document.getElementById('cover-placeholder');
+        const coverPreviewContainer = document.getElementById('cover-preview-container');
+        const coverPreviewImg = document.getElementById('cover-preview-img');
+        const dropzoneCover = document.getElementById('dropzone-cover');
+
+        if(coverInput) {
+            coverInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        coverPreviewImg.src = e.target.result;
+                        coverPlaceholder.classList.add('hidden');
+                        coverPreviewContainer.classList.remove('hidden');
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // Gallery Images Preview
+        const galleryInput = document.getElementById('gallery_images_input');
+        const galleryPlaceholder = document.getElementById('gallery-placeholder');
+        const galleryPreviewContainer = document.getElementById('gallery-preview-container');
+        const dropzoneGallery = document.getElementById('dropzone-gallery');
+
+        if(galleryInput) {
+            galleryInput.addEventListener('change', function(e) {
+                galleryPreviewContainer.innerHTML = ''; // Clear existing previews
+                
+                if (this.files.length > 0) {
+                    galleryPlaceholder.classList.add('hidden');
+                    galleryPreviewContainer.classList.remove('hidden');
+                    galleryPreviewContainer.classList.add('grid');
+                    
+                    Array.from(this.files).forEach(file => {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const div = document.createElement('div');
+                            div.className = 'aspect-square rounded-lg overflow-hidden border border-gray-200 shadow-sm relative bg-white';
+                            div.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover">`;
+                            galleryPreviewContainer.appendChild(div);
+                        }
+                        reader.readAsDataURL(file);
+                    });
+                } else {
+                    galleryPlaceholder.classList.remove('hidden');
+                    galleryPreviewContainer.classList.add('hidden');
+                    galleryPreviewContainer.classList.remove('grid');
+                }
+            });
+        }
+        
+        // Drag and drop visual cues
+        [dropzoneCover, dropzoneGallery].forEach(dropzone => {
+            if(!dropzone) return;
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropzone.addEventListener(eventName, () => {
+                    dropzone.classList.add('border-brand-blue', 'bg-blue-50/50');
+                }, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, () => {
+                    dropzone.classList.remove('border-brand-blue', 'bg-blue-50/50');
+                }, false);
+            });
+        });
+    });
+</script>
+@endpush
 @endsection
