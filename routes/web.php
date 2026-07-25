@@ -191,7 +191,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::get('/projects-order', [AdminProjectController::class, 'order'])->name('projects.order');
     Route::post('/projects-order', [AdminProjectController::class, 'updateOrder'])->name('projects.update-order');
 
+    Route::patch('/listings/{listing}/order', [AdminListingController::class, 'updateOrderAjax'])->name('listings.update-order-ajax');
+    Route::patch('/listings/{listing}/publish', [AdminListingController::class, 'updatePublishAjax'])->name('listings.update-publish-ajax');
     Route::resource('listings', AdminListingController::class)->except(['show']);
+    
+    Route::patch('/projects/{project}/order', [AdminProjectController::class, 'updateOrderAjax'])->name('projects.update-order-ajax');
+    Route::patch('/projects/{project}/publish', [AdminProjectController::class, 'updatePublishAjax'])->name('projects.update-publish-ajax');
     Route::resource('projects', AdminProjectController::class)->except(['show']);
     Route::resource('agents', AdminAgentController::class)->except(['show']);
     Route::resource('areas', AdminAreaController::class)->except(['show']);
@@ -208,6 +213,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::get('/audit-logs', [AdminAuditLogController::class, 'index'])->name('audit-logs.index');
     Route::get('/audit-logs/export', [AdminAuditLogController::class, 'export'])->name('audit-logs.export');
     Route::get('/audit-logs/{auditLog}', [AdminAuditLogController::class, 'show'])->name('audit-logs.show');
+
+    // Settings
+    Route::get('/settings', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');
+    Route::put('/settings', [\App\Http\Controllers\Admin\SettingController::class, 'update'])->name('settings.update');
 });
 
 /*

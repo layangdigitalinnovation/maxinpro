@@ -15,6 +15,13 @@
 <section class="bg-brand-soft border-b border-brand-line py-6">
     <div class="max-w-[1280px] mx-auto px-8">
         <form action="{{ route('listings.index') }}" method="GET" class="grid grid-cols-1 min-[900px]:grid-cols-[2fr_1fr_1fr_auto] gap-3">
+            @if(request('price_range')) <input type="hidden" name="price_range" value="{{ request('price_range') }}"> @endif
+            @if(request('luas_tanah')) <input type="hidden" name="luas_tanah" value="{{ request('luas_tanah') }}"> @endif
+            @if(request('type'))
+                @foreach((array)request('type') as $t)
+                    <input type="hidden" name="type[]" value="{{ $t }}">
+                @endforeach
+            @endif
             <label class="h-12 border border-brand-line rounded-[10px] bg-white flex items-center gap-3 px-4">
                 <span>🔍</span>
                 <input type="search" name="q" value="{{ request('q') }}" placeholder="Cari lokasi, nama properti, atau keyword" class="w-full border-0 outline-none text-[14px] font-semibold">
@@ -44,6 +51,10 @@
         <strong class="block text-brand-navy text-[14px] font-black mb-4">Filter</strong>
         <form action="{{ route('listings.index') }}" method="GET">
             <input type="hidden" name="q" value="{{ request('q') }}">
+            @if(request('sort')) <input type="hidden" name="sort" value="{{ request('sort') }}"> @endif
+            @if(request('bedrooms')) <input type="hidden" name="bedrooms" value="{{ request('bedrooms') }}"> @endif
+            @if(request('price_range')) <input type="hidden" name="price_range" value="{{ request('price_range') }}"> @endif
+            @if(request('luas_tanah')) <input type="hidden" name="luas_tanah" value="{{ request('luas_tanah') }}"> @endif
             <div class="mb-4">
                 <strong class="block text-brand-navy text-[12.5px] font-extrabold mb-2.5">Tipe Properti</strong>
                 @foreach ($propertyTypes as $type)

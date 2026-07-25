@@ -10,6 +10,12 @@ class ListingController extends Controller
 {
     public function index(Request $request)
     {
+        if ($request->has('type') && is_array($request->type)) {
+            $request->merge([
+                'type' => array_filter($request->type, fn($val) => $val !== null && $val !== '')
+            ]);
+        }
+
         $validated = $request->validate([
             'q' => ['nullable', 'string', 'max:150'],
             'type' => ['nullable', 'array'],
@@ -18,6 +24,7 @@ class ListingController extends Controller
             'price_min' => ['nullable', 'integer', 'min:0'],
             'price_max' => ['nullable', 'integer', 'min:0'],
             'price_range' => ['nullable', 'string'],
+            'luas_tanah' => ['nullable', 'string'],
             'sort' => ['nullable', 'in:terbaru,harga_asc,harga_desc'],
         ]);
 
@@ -60,10 +67,22 @@ class ListingController extends Controller
             }
         }
 
+        if (!empty($validated['luas_tanah'])) {
+            $rangeParts = explode('-', $validated['luas_tanah']);
+            if (count($rangeParts) === 2) {
+                if ($rangeParts[0] !== '') {
+                    $query->where('land_area', '>=', (int) $rangeParts[0]);
+                }
+                if ($rangeParts[1] !== '') {
+                    $query->where('land_area', '<=', (int) $rangeParts[1]);
+                }
+            }
+        }
+
         match ($validated['sort'] ?? 'terbaru') {
             'harga_asc' => $query->orderBy('price', 'asc'),
             'harga_desc' => $query->orderBy('price', 'desc'),
-            default => $query->latest('published_at'),
+            default => $query->orderByPriority(),
         };
 
         $listings = $query->paginate(9)->withQueryString();

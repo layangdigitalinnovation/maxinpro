@@ -18,11 +18,33 @@ class ListingController extends Controller
         $listings = Listing::query()
             ->with(['area', 'propertyType', 'agent'])
             ->when($request->filled('q'), fn ($q) => $q->where('title', 'like', '%' . $request->string('q') . '%'))
-            ->latest()
+            ->orderByPriority()
             ->paginate(15)
             ->withQueryString();
 
         return view('admin.listings.index', compact('listings'));
+    }
+
+    public function updateOrderAjax(Request $request, Listing $listing)
+    {
+        $validated = $request->validate([
+            'sort_order' => ['required', 'integer', 'min:0'],
+        ]);
+
+        $listing->update(['sort_order' => $validated['sort_order']]);
+
+        return response()->json(['status' => 'success', 'message' => 'Urutan berhasil diperbarui']);
+    }
+
+    public function updatePublishAjax(Request $request, Listing $listing)
+    {
+        $validated = $request->validate([
+            'is_published' => ['required', 'boolean'],
+        ]);
+
+        $listing->update(['is_published' => $validated['is_published']]);
+
+        return response()->json(['status' => 'success', 'message' => 'Status tayang berhasil diperbarui']);
     }
 
     public function create()
@@ -150,11 +172,14 @@ class ListingController extends Controller
             'status' => ['required', 'in:active,sold,hidden'],
             'cover_image' => ['nullable', 'image', 'max:2048'],
             'youtube_url' => ['nullable', 'url', 'max:255'],
+            'sort_order' => ['nullable', 'integer', 'min:0'],
+            'is_published' => ['nullable', 'boolean'],
         ]);
 
         // Merge computed values last so they always win over raw validated input.
         return array_merge($validated, [
             'is_featured' => $request->boolean('is_featured'),
+            'is_published' => $request->boolean('is_published'),
             'published_at' => $listing?->published_at ?? now(),
         ]);
     }

@@ -27,18 +27,19 @@ foreach ($attributes->all() as $__key => $__value) {
 }
 
 unset($__defined_vars); ?>
-<article class="bg-white border border-brand-line rounded-card overflow-hidden shadow-card">
-    <div class="relative aspect-[2.1/1] bg-brand-soft">
+<article class="bg-white border border-brand-line rounded-card overflow-hidden shadow-card flex flex-col h-full relative hover:shadow-lg transition-shadow">
+    <a href="<?php echo e(route('listings.show', $listing)); ?>" class="absolute inset-0 z-10"></a>
+    <div class="relative bg-brand-soft shrink-0 w-full" style="padding-bottom: 56.25%;">
         <img src="<?php echo e($listing->cover_image ? asset('storage/'.$listing->cover_image) : asset('images/hero-skyline.png')); ?>"
-             alt="<?php echo e($listing->title); ?>" class="w-full h-full object-cover" loading="lazy">
+             alt="<?php echo e($listing->title); ?>" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
         <?php if($listing->badge): ?>
-            <span class="absolute left-2.5 top-2.5 h-[22px] px-2.5 rounded-full bg-gradient-to-r from-[#0a7cff] to-[#0054ef] text-white inline-flex items-center text-[10px] font-black uppercase">
+            <span class="absolute left-2.5 top-2.5 h-[22px] px-2.5 rounded-full bg-gradient-to-r from-[#0a7cff] to-[#0054ef] text-white inline-flex items-center text-[10px] font-black uppercase z-20">
                 <?php echo e($listing->badge); ?>
 
             </span>
         <?php endif; ?>
         <?php if(auth()->guard()->check()): ?>
-            <form action="<?php echo e(route('listings.toggle-save', $listing)); ?>" method="POST" class="absolute top-2.5 right-2.5">
+            <form action="<?php echo e(route('listings.toggle-save', $listing)); ?>" method="POST" class="absolute top-2.5 right-2.5 z-20">
                 <?php echo csrf_field(); ?>
                 <button type="submit" aria-label="Simpan" class="w-7 h-7 rounded-full grid place-items-center shadow <?php echo e($saved ? 'bg-brand-blue text-white' : 'bg-white/90 text-brand-blue'); ?>">
                     <?php echo e($saved ? '♥' : '♡'); ?>
@@ -46,21 +47,25 @@ unset($__defined_vars); ?>
                 </button>
             </form>
         <?php else: ?>
-            <a href="<?php echo e(route('login')); ?>" aria-label="Masuk untuk menyimpan" class="absolute top-2.5 right-2.5 w-7 h-7 rounded-full grid place-items-center shadow bg-white/90 text-brand-blue">♡</a>
+            <a href="<?php echo e(route('login')); ?>" aria-label="Masuk untuk menyimpan" class="absolute top-2.5 right-2.5 w-7 h-7 rounded-full grid place-items-center shadow bg-white/90 text-brand-blue z-20">♡</a>
         <?php endif; ?>
     </div>
-    <div class="p-3.5 pb-4">
-        <h3 class="mb-1 text-brand-navy text-[14px] leading-tight font-extrabold">
-            <a href="<?php echo e(route('listings.show', $listing)); ?>"><?php echo e($listing->title); ?></a>
+    <div class="p-3.5 pb-4 flex flex-col flex-1">
+        <h3 class="mb-1 text-brand-navy text-[14px] leading-tight font-extrabold line-clamp-2" title="<?php echo e($listing->title); ?>">
+            <?php echo e($listing->title); ?>
+
         </h3>
         <div class="text-[#55617a] text-[11.5px] font-bold mb-2.5"><?php echo e($listing->area->name); ?>, <?php echo e($listing->area->city); ?></div>
-        <div class="flex items-center gap-2.5 text-[#51607a] text-[11.5px] font-bold mb-2.5 flex-wrap">
-            <span>🚗 <?php echo e($listing->car_ports); ?></span>
-            <span>🛏 <?php echo e($listing->bedrooms); ?></span>
-            <span>🛁 <?php echo e($listing->bathrooms); ?></span>
-            <span><?php echo e($listing->land_area); ?> m²</span>
+        
+        <div class="mt-auto">
+            <div class="flex items-center gap-2.5 text-[#51607a] text-[11.5px] font-bold mb-2.5 flex-wrap">
+                <span>🚗 <?php echo e($listing->car_ports); ?></span>
+                <span>🛏 <?php echo e($listing->bedrooms); ?></span>
+                <span>🛁 <?php echo e($listing->bathrooms); ?></span>
+                <span><?php echo e($listing->land_area); ?> m²</span>
+            </div>
+            <div class="text-brand-navy text-[15px] font-black"><?php echo e($listing->formatted_price); ?></div>
         </div>
-        <div class="text-brand-navy text-[15px] font-black"><?php echo e($listing->formatted_price); ?></div>
     </div>
 </article>
 <?php /**PATH D:\Layang\maxinpro.com\resources\views/components/listing-card.blade.php ENDPATH**/ ?>

@@ -16,11 +16,12 @@ class Project extends Model
 
     protected $fillable = [
         'name', 'slug', 'developer_id', 'area_id', 'property_type_id', 'description', 'status',
-        'price_from', 'units_available', 'cover_image', 'is_featured', 'published_at', 'priority_order',
+        'price_from', 'units_available', 'cover_image', 'is_featured', 'published_at', 'priority_order', 'sort_order', 'is_published',
     ];
 
     protected $casts = [
         'is_featured' => 'boolean',
+        'is_published' => 'boolean',
         'published_at' => 'datetime',
         'price_from' => 'integer',
         'priority_order' => 'integer',
@@ -48,9 +49,10 @@ class Project extends Model
 
     public function scopePublished(Builder $query): Builder
     {
-        return $query->where(function ($q) {
-            $q->whereNull('published_at')->orWhere('published_at', '<=', now());
-        });
+        return $query->where('is_published', true)
+            ->where(function ($q) {
+                $q->whereNull('published_at')->orWhere('published_at', '<=', now());
+            });
     }
 
     public function scopeFeatured(Builder $query): Builder
@@ -65,7 +67,7 @@ class Project extends Model
      */
     public function scopeOrderByPriority(Builder $query): Builder
     {
-        return $query->orderBy('priority_order')->orderByDesc('published_at');
+        return $query->orderBy('sort_order')->orderBy('priority_order')->orderByDesc('published_at');
     }
 
     public function getFormattedPriceFromAttribute(): string

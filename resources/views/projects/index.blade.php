@@ -26,7 +26,7 @@
 </section>
 
 <section class="max-w-[1280px] mx-auto px-8 mt-6 pb-14">
-    <div class="grid grid-cols-1 min-[700px]:grid-cols-2 min-[1000px]:grid-cols-3 gap-5.5">
+    <div class="grid grid-cols-1 min-[700px]:grid-cols-2 min-[1000px]:grid-cols-3 gap-5">
         @forelse ($projects as $project)
             <x-project-card :project="$project" />
         @empty

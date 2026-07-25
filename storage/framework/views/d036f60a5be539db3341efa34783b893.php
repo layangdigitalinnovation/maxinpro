@@ -10,11 +10,27 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
+    <style>
+        /* Custom Toggle Switch */
+        .custom-toggle { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0; }
+        .custom-toggle input { opacity: 0; width: 0; height: 0; }
+        .custom-toggle .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ef4444; transition: .3s; border-radius: 24px; }
+        .custom-toggle .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 2px; bottom: 2px; background-color: white; transition: .3s; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+        .custom-toggle input:checked + .slider { background-color: #22c55e; }
+        .custom-toggle input:focus + .slider { box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.4); }
+        .custom-toggle input:checked + .slider:before { transform: translateX(20px); }
+
+        /* Custom Sleek Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #60a5fa; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+    </style>
 </head>
-<body class="font-sans bg-brand-soft min-h-screen">
+<body class="font-sans bg-brand-soft h-screen overflow-hidden">
     <?php $user = auth()->user(); ?>
 
-    <div class="flex min-h-screen relative overflow-hidden min-[900px]:overflow-visible">
+    <div class="flex h-screen relative overflow-hidden">
         <!-- Mobile Sidebar Overlay -->
         <div id="sidebar-overlay" class="fixed inset-0 bg-brand-navy/60 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-300 min-[900px]:hidden"></div>
         
@@ -41,6 +57,7 @@
                     <a href="<?php echo e(route('admin.testimonials.index')); ?>" class="block px-3 py-2.5 rounded-lg transition-all duration-200 <?php echo e(request()->routeIs('admin.testimonials.*') ? 'bg-white/10 text-white shadow-sm ring-1 ring-white/10' : 'text-white/60 hover:text-white hover:bg-white/5'); ?>">Testimoni</a>
                     <a href="<?php echo e(route('admin.partner-banks.index')); ?>" class="block px-3 py-2.5 rounded-lg transition-all duration-200 <?php echo e(request()->routeIs('admin.partner-banks.*') ? 'bg-white/10 text-white shadow-sm ring-1 ring-white/10' : 'text-white/60 hover:text-white hover:bg-white/5'); ?>">Bank Rekanan</a>
                     <a href="<?php echo e(route('admin.audit-logs.index')); ?>" class="block px-3 py-2.5 rounded-lg transition-all duration-200 <?php echo e(request()->routeIs('admin.audit-logs.*') ? 'bg-white/10 text-white shadow-sm ring-1 ring-white/10' : 'text-white/60 hover:text-white hover:bg-white/5'); ?>">Audit Log</a>
+                    <a href="<?php echo e(route('admin.settings.index')); ?>" class="block px-3 py-2.5 rounded-lg transition-all duration-200 <?php echo e(request()->routeIs('admin.settings.*') ? 'bg-white/10 text-white shadow-sm ring-1 ring-white/10' : 'text-white/60 hover:text-white hover:bg-white/5'); ?>">Pengaturan</a>
                 <?php elseif($user->isAgent()): ?>
                     <a href="<?php echo e(route('agent.dashboard')); ?>" class="block px-3 py-2.5 rounded-lg transition-all duration-200 <?php echo e(request()->routeIs('agent.dashboard') ? 'bg-white/10 text-white shadow-sm ring-1 ring-white/10' : 'text-white/60 hover:text-white hover:bg-white/5'); ?>">Dashboard</a>
                     <a href="<?php echo e(route('agent.listings.index')); ?>" class="block px-3 py-2.5 rounded-lg transition-all duration-200 <?php echo e(request()->routeIs('agent.listings.*') ? 'bg-white/10 text-white shadow-sm ring-1 ring-white/10' : 'text-white/60 hover:text-white hover:bg-white/5'); ?>">Listing Saya</a>
@@ -68,7 +85,7 @@
             </div>
         </aside>
 
-        <div class="flex-1 flex flex-col min-w-0 h-screen overflow-y-auto">
+        <div class="flex-1 flex flex-col min-w-0 h-screen overflow-y-auto custom-scrollbar scroll-smooth">
             <!-- Mobile Header -->
             <header class="min-[900px]:hidden bg-white h-16 shrink-0 flex items-center justify-between px-4 border-b border-brand-line shadow-sm sticky top-0 z-30">
                 <div class="flex items-center gap-3">

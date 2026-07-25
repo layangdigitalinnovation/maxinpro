@@ -19,6 +19,16 @@
     </div>
 </div>
 
+@if($errors->any())
+    <div class="bg-red-100 text-red-700 p-4 rounded-lg mb-6 font-bold">
+        <ul class="list-disc pl-5">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 @if(session('success'))
     <div class="bg-green-100 text-green-700 p-4 rounded-lg mb-6 font-bold">
         {{ session('success') }}
@@ -38,7 +48,18 @@
         <tbody class="divide-y divide-brand-line">
             @forelse($areas as $area)
                 <tr class="hover:bg-gray-50">
-                    <td class="p-4 text-sm font-bold text-brand-navy">{{ $area->name }}</td>
+                    <td class="p-4 text-sm font-bold text-brand-navy">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-lg bg-gray-100 border border-gray-200 overflow-hidden shrink-0 flex items-center justify-center">
+                                @if($area->image_path)
+                                    <img src="{{ asset('storage/' . $area->image_path) }}" alt="{{ $area->name }}" class="w-full h-full object-cover">
+                                @else
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                @endif
+                            </div>
+                            <span>{{ $area->name }}</span>
+                        </div>
+                    </td>
                     <td class="p-4 text-sm">{{ $area->city ?? '-' }}</td>
                     <td class="p-4 text-center text-sm">
                         @if($area->is_popular)

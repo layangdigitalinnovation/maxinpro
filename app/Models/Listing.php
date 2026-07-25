@@ -15,13 +15,32 @@ class Listing extends Model
     use HasFactory, SoftDeletes, Auditable;
 
     protected $fillable = [
-        'title', 'slug', 'description', 'property_type_id', 'area_id', 'agent_id',
-        'address', 'price', 'land_area', 'building_area', 'bedrooms', 'bathrooms',
-        'car_ports', 'badge', 'status', 'cover_image', 'youtube_url', 'is_featured', 'published_at',
+        'title',
+        'slug',
+        'description',
+        'property_type_id',
+        'area_id',
+        'agent_id',
+        'address',
+        'price',
+        'land_area',
+        'building_area',
+        'bedrooms',
+        'bathrooms',
+        'car_ports',
+        'is_featured',
+        'badge',
+        'status',
+        'cover_image',
+        'youtube_url',
+        'published_at',
+        'sort_order',
+        'is_published',
     ];
 
     protected $casts = [
         'is_featured' => 'boolean',
+        'is_published' => 'boolean',
         'published_at' => 'datetime',
         'price' => 'integer',
     ];
@@ -54,6 +73,7 @@ class Listing extends Model
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('status', 'active')
+            ->where('is_published', true)
             ->where(function ($q) {
                 $q->whereNull('published_at')->orWhere('published_at', '<=', now());
             });
@@ -62,6 +82,11 @@ class Listing extends Model
     public function scopeFeatured(Builder $query): Builder
     {
         return $query->where('is_featured', true);
+    }
+
+    public function scopeOrderByPriority(Builder $query): Builder
+    {
+        return $query->orderBy('sort_order')->orderByDesc('published_at');
     }
 
     public function getFormattedPriceAttribute(): string

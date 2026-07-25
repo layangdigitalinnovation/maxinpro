@@ -24,6 +24,28 @@ class ProjectController extends Controller
         return view('admin.projects.index', compact('projects'));
     }
 
+    public function updateOrderAjax(Request $request, Project $project)
+    {
+        $validated = $request->validate([
+            'sort_order' => ['required', 'integer', 'min:0'],
+        ]);
+
+        $project->update(['sort_order' => $validated['sort_order']]);
+
+        return response()->json(['status' => 'success', 'message' => 'Urutan berhasil diperbarui']);
+    }
+
+    public function updatePublishAjax(Request $request, Project $project)
+    {
+        $validated = $request->validate([
+            'is_published' => ['required', 'boolean'],
+        ]);
+
+        $project->update(['is_published' => $validated['is_published']]);
+
+        return response()->json(['status' => 'success', 'message' => 'Status tayang berhasil diperbarui']);
+    }
+
     public function create()
     {
         return view('admin.projects.form', [
@@ -170,9 +192,14 @@ class ProjectController extends Controller
             'price_from' => ['required', 'integer', 'min:0'],
             'units_available' => ['nullable', 'string', 'max:100'],
             'cover_image' => ['nullable', 'image', 'max:2048'],
+            'sort_order' => ['nullable', 'integer', 'min:0'],
+            'is_published' => ['nullable', 'boolean'],
         ]);
 
-        return array_merge($validated, ['is_featured' => $request->boolean('is_featured')]);
+        return array_merge($validated, [
+            'is_featured' => $request->boolean('is_featured'),
+            'is_published' => $request->boolean('is_published'),
+        ]);
     }
 
     protected function storeGalleryImages(Request $request, Project $project, ImageUploadService $images): void

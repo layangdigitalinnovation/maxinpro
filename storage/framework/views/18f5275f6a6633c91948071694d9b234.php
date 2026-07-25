@@ -12,6 +12,13 @@
 <section class="bg-brand-soft border-b border-brand-line py-6">
     <div class="max-w-[1280px] mx-auto px-8">
         <form action="<?php echo e(route('listings.index')); ?>" method="GET" class="grid grid-cols-1 min-[900px]:grid-cols-[2fr_1fr_1fr_auto] gap-3">
+            <?php if(request('price_range')): ?> <input type="hidden" name="price_range" value="<?php echo e(request('price_range')); ?>"> <?php endif; ?>
+            <?php if(request('luas_tanah')): ?> <input type="hidden" name="luas_tanah" value="<?php echo e(request('luas_tanah')); ?>"> <?php endif; ?>
+            <?php if(request('type')): ?>
+                <?php $__currentLoopData = (array)request('type'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $t): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <input type="hidden" name="type[]" value="<?php echo e($t); ?>">
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php endif; ?>
             <label class="h-12 border border-brand-line rounded-[10px] bg-white flex items-center gap-3 px-4">
                 <span>🔍</span>
                 <input type="search" name="q" value="<?php echo e(request('q')); ?>" placeholder="Cari lokasi, nama properti, atau keyword" class="w-full border-0 outline-none text-[14px] font-semibold">
@@ -41,6 +48,10 @@
         <strong class="block text-brand-navy text-[14px] font-black mb-4">Filter</strong>
         <form action="<?php echo e(route('listings.index')); ?>" method="GET">
             <input type="hidden" name="q" value="<?php echo e(request('q')); ?>">
+            <?php if(request('sort')): ?> <input type="hidden" name="sort" value="<?php echo e(request('sort')); ?>"> <?php endif; ?>
+            <?php if(request('bedrooms')): ?> <input type="hidden" name="bedrooms" value="<?php echo e(request('bedrooms')); ?>"> <?php endif; ?>
+            <?php if(request('price_range')): ?> <input type="hidden" name="price_range" value="<?php echo e(request('price_range')); ?>"> <?php endif; ?>
+            <?php if(request('luas_tanah')): ?> <input type="hidden" name="luas_tanah" value="<?php echo e(request('luas_tanah')); ?>"> <?php endif; ?>
             <div class="mb-4">
                 <strong class="block text-brand-navy text-[12.5px] font-extrabold mb-2.5">Tipe Properti</strong>
                 <?php $__currentLoopData = $propertyTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

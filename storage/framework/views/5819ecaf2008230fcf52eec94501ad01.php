@@ -18,6 +18,16 @@
     </div>
 </div>
 
+<?php if($errors->any()): ?>
+    <div class="bg-red-100 text-red-700 p-4 rounded-lg mb-6 font-bold">
+        <ul class="list-disc pl-5">
+            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <li><?php echo e($error); ?></li>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
 <?php if(session('success')): ?>
     <div class="bg-green-100 text-green-700 p-4 rounded-lg mb-6 font-bold">
         <?php echo e(session('success')); ?>
@@ -38,7 +48,18 @@
         <tbody class="divide-y divide-brand-line">
             <?php $__empty_1 = true; $__currentLoopData = $areas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $area): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                 <tr class="hover:bg-gray-50">
-                    <td class="p-4 text-sm font-bold text-brand-navy"><?php echo e($area->name); ?></td>
+                    <td class="p-4 text-sm font-bold text-brand-navy">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-lg bg-gray-100 border border-gray-200 overflow-hidden shrink-0 flex items-center justify-center">
+                                <?php if($area->image_path): ?>
+                                    <img src="<?php echo e(asset('storage/' . $area->image_path)); ?>" alt="<?php echo e($area->name); ?>" class="w-full h-full object-cover">
+                                <?php else: ?>
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <?php endif; ?>
+                            </div>
+                            <span><?php echo e($area->name); ?></span>
+                        </div>
+                    </td>
                     <td class="p-4 text-sm"><?php echo e($area->city ?? '-'); ?></td>
                     <td class="p-4 text-center text-sm">
                         <?php if($area->is_popular): ?>

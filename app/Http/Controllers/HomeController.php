@@ -22,7 +22,7 @@ class HomeController extends Controller
         $listings = Listing::query()
             ->with(['area'])
             ->active()
-            ->latest('published_at')
+            ->orderByPriority()
             ->take(6)
             ->get();
 

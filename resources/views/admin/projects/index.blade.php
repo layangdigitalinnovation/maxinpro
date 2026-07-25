@@ -11,14 +11,17 @@
             <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
         </form>
         <div class="flex gap-3 w-full sm:w-auto">
-            
-        <a href="{{ route('admin.projects.order') }}" class="h-11 px-6 inline-flex items-center rounded-lg bg-indigo-100 text-indigo-700 text-[13px] font-extrabold hover:bg-indigo-200">
+        <button onclick="window.location.reload()" class="whitespace-nowrap h-11 px-4 inline-flex items-center gap-2 rounded-lg bg-white border border-brand-line text-brand-navy text-[13px] font-extrabold hover:bg-gray-50" title="Refresh urutan tabel">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            Refresh
+        </button>
+        <a href="{{ route('admin.projects.order') }}" class="whitespace-nowrap h-11 px-6 inline-flex items-center rounded-lg bg-indigo-100 text-indigo-700 text-[13px] font-extrabold hover:bg-indigo-200">
             Atur Urutan
         </a>
-        <a href="{{ route('admin.projects.trashed') }}" class="h-11 px-6 inline-flex items-center rounded-lg bg-gray-200 text-brand-navy text-[13px] font-extrabold hover:bg-gray-300">
+        <a href="{{ route('admin.projects.trashed') }}" class="whitespace-nowrap h-11 px-6 inline-flex items-center rounded-lg bg-gray-200 text-brand-navy text-[13px] font-extrabold hover:bg-gray-300">
             Sampah
         </a>
-        <a href="{{ route('admin.projects.create') }}" class="h-11 px-6 inline-flex items-center rounded-lg bg-brand-blue text-white text-[13px] font-extrabold hover:bg-blue-700">
+        <a href="{{ route('admin.projects.create') }}" class="whitespace-nowrap h-11 px-6 inline-flex items-center rounded-lg bg-brand-blue text-white text-[13px] font-extrabold hover:bg-blue-700">
             + Tambah Project
         </a>
     
@@ -40,6 +43,8 @@
                 <th class="p-4 font-bold text-sm text-brand-navy">Developer & Area</th>
                 <th class="p-4 font-bold text-sm text-brand-navy">Harga Mulai</th>
                 <th class="p-4 font-bold text-sm text-brand-navy">Status</th>
+                <th class="p-4 font-bold text-sm text-brand-navy text-center">Publish</th>
+                <th class="p-4 font-bold text-sm text-brand-navy text-center">Urutan</th>
                 <th class="p-4 font-bold text-sm text-brand-navy w-32">Aksi</th>
             </tr>
         </thead>
@@ -56,13 +61,36 @@
                         <span class="font-bold">{{ $project->developer->name ?? '-' }}</span><br>
                         <span class="text-xs text-gray-500">{{ $project->area->name ?? '-' }}</span>
                     </td>
-                    <td class="p-4 font-bold text-sm text-brand-navy">
+                    <td class="p-4 font-bold text-sm text-brand-navy whitespace-nowrap">
                         Rp {{ number_format($project->price_from, 0, ',', '.') }}
                     </td>
                     <td class="p-4 text-sm">
                         <span class="px-2 py-1 rounded text-xs font-bold bg-gray-100 text-gray-700">
                             {{ $project->status }}
                         </span>
+                    </td>
+                    <td class="p-4 text-sm text-center">
+                        <label class="custom-toggle">
+                            <input type="checkbox" class="publish-toggle-input" 
+                                {{ $project->is_published ? 'checked' : '' }}
+                                data-id="{{ $project->id }}"
+                                data-url="{{ route('admin.projects.update-publish-ajax', $project) }}"
+                            >
+                            <span class="slider"></span>
+                        </label>
+                    </td>
+                    <td class="p-4 text-sm text-center">
+                        <div class="inline-flex items-center gap-2">
+                            <input type="number" min="0"
+                                class="w-16 h-8 text-center border border-brand-line rounded-lg focus:ring-brand-blue text-sm sort-order-input" 
+                                value="{{ $project->sort_order }}" 
+                                data-id="{{ $project->id }}"
+                                data-url="{{ route('admin.projects.update-order-ajax', $project) }}"
+                            >
+                            <span class="text-green-500 opacity-0 transition-opacity duration-300 save-indicator-{{ $project->id }}">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </span>
+                        </div>
                     </td>
                     <td class="p-4 text-sm flex gap-3">
                         <a href="{{ route('admin.projects.edit', $project) }}" class="text-blue-600 hover:underline font-bold">Edit</a>
@@ -85,3 +113,69 @@
     {{ $projects->links() }}
 </div>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const inputs = document.querySelectorAll('.sort-order-input');
+    
+    inputs.forEach(input => {
+        input.addEventListener('change', function() {
+            const url = this.dataset.url;
+            const id = this.dataset.id;
+            const value = this.value;
+            const indicator = document.querySelector(`.save-indicator-${id}`);
+            
+            fetch(url, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ sort_order: value })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    indicator.classList.remove('opacity-0');
+                    setTimeout(() => {
+                        indicator.classList.add('opacity-0');
+                    }, 2000);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+
+    const publishInputs = document.querySelectorAll('.publish-toggle-input');
+    publishInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            const url = this.dataset.url;
+            const value = this.checked;
+            
+            fetch(url, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ is_published: value })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.status !== 'success') {
+                    // Revert if failed
+                    this.checked = !value;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                this.checked = !value; // Revert if failed
+            });
+        });
+    });
+});
+</script>
+@endpush

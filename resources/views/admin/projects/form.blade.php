@@ -83,9 +83,29 @@
             <input type="text" name="units_available" value="{{ old('units_available', $project->units_available) }}" class="w-full border border-brand-line rounded-lg px-4 py-2 focus:ring-brand-blue" placeholder="Contoh: 15 Unit, Sisa 2, dll">
         </div>
 
+        <div>
+            <label class="block text-sm font-bold text-brand-navy mb-2">Tampilkan di Website</label>
+            <label class="custom-toggle mt-2">
+                <input type="hidden" name="is_published" value="0">
+                <input type="checkbox" name="is_published" value="1" {{ old('is_published', $project->is_published ?? true) ? 'checked' : '' }}>
+                <span class="slider"></span>
+            </label>
+            <span class="ml-3 text-sm font-bold text-gray-700 align-top leading-6">Publish</span>
+        </div>
+
+        <div>
+            <label class="block text-sm font-bold text-brand-navy mb-2">Urutan Tampil (Sort Order)</label>
+            <div class="flex items-center gap-2">
+                <button type="button" onclick="this.nextElementSibling.stepDown()" class="w-10 h-10 flex items-center justify-center border border-brand-line rounded-lg bg-gray-50 hover:bg-gray-100 font-bold text-gray-600 focus:outline-none transition-colors">-</button>
+                <input type="number" min="0" name="sort_order" value="{{ old('sort_order', $project->sort_order ?? 0) }}" class="w-20 text-center border border-brand-line rounded-lg h-10 focus:ring-brand-blue hide-arrows" required>
+                <button type="button" onclick="this.previousElementSibling.stepUp()" class="w-10 h-10 flex items-center justify-center border border-brand-line rounded-lg bg-gray-50 hover:bg-gray-100 font-bold text-gray-600 focus:outline-none transition-colors">+</button>
+            </div>
+            <div class="text-[11px] text-[#7a8399] mt-1">Angka lebih kecil tampil lebih dulu.</div>
+        </div>
+
         <div class="col-span-2">
             <label class="block text-sm font-bold text-brand-navy mb-2">Deskripsi Lengkap</label>
-            <textarea name="description" rows="5" class="w-full border border-brand-line rounded-lg px-4 py-2 focus:ring-brand-blue">{{ old('description', $project->description) }}</textarea>
+            <textarea id="editor-description" name="description" rows="5" class="w-full border border-brand-line rounded-lg px-4 py-2 focus:ring-brand-blue">{{ old('description', $project->description) }}</textarea>
         </div>
 
         <div class="col-span-2">
@@ -132,4 +152,42 @@
         </button>
     </div>
 </form>
+@push('scripts')
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+<style>
+    .hide-arrows::-webkit-outer-spin-button, 
+    .hide-arrows::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    .hide-arrows {
+        -moz-appearance: textfield;
+    }
+    .ck-editor__editable_inline {
+        min-height: 250px;
+        padding: 1rem 1.5rem;
+    }
+    .ck-editor__editable ul {
+        list-style-type: disc !important;
+        margin-left: 1.5rem !important;
+    }
+    .ck-editor__editable ol {
+        list-style-type: decimal !important;
+        margin-left: 1.5rem !important;
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (document.querySelector('#editor-description')) {
+            ClassicEditor
+                .create(document.querySelector('#editor-description'), {
+                    toolbar: ['heading', '|', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo']
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    });
+</script>
+@endpush
 @endsection

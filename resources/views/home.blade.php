@@ -439,58 +439,10 @@
 
 {{-- APP BANNER --}}
 <section class="max-w-[1280px] mx-auto px-8 mb-16 relative">
-    <div class="rounded-3xl bg-brand-blue text-white p-10 flex flex-col min-[900px]:flex-row items-center justify-between gap-6 shadow-xl relative overflow-hidden min-h-[220px]">
-        <!-- Vector graphic in background -->
-        <div class="absolute top-0 right-0 bottom-0 w-1/2 bg-gradient-to-l from-[#004de7] to-transparent opacity-60"></div>
-        
-        <div class="relative z-10 max-w-md">
-            <h2 class="text-[28px] font-black mb-2 leading-tight">Jelajahi Properti Kapan Saja,<br>di Mana Saja</h2>
-            <p class="text-[14px] font-bold text-white/90 mb-0">Download aplikasi MaxinPro sekarang!</p>
-        </div>
-        
-        <!-- App Store / Play Store Buttons -->
-        <div class="relative z-10 flex flex-col sm:flex-row items-center gap-4">
-            <div class="flex flex-col gap-3">
-                <a href="#" class="h-[46px] w-[140px] bg-black rounded-lg text-white flex items-center px-3 hover:scale-105 transition-transform border border-white/20 shadow-md">
-                    <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M17.523 15.3414c-.0522-3.1534 2.585-4.6908 2.705-4.7645-1.458-2.1287-3.72-2.4277-4.5422-2.464-1.921-.194-3.7533 1.134-4.733 1.134-.9795 0-2.493-1.1072-4.0754-1.0772-2.0733.0298-3.9877 1.2015-5.0487 3.056-2.1557 3.7317-.5523 9.2483 1.5436 12.2743 1.0267 1.4828 2.2476 3.1616 3.8427 3.099 1.5367-.0626 2.119-.9884 3.9664-.9884 1.8367 0 2.3787.9884 3.9782.957 1.6212-.0312 2.656-1.5126 3.6702-2.986.174-.2517.34-.516.494-.789-1.5727-.6402-2.7303-2.1866-2.7483-3.9612.012-1.8596 1.0664-3.411 2.5768-4.2238M14.931 5.9224c.854-1.0326 1.428-2.466 1.272-3.8964-1.228.05-2.709.816-3.593 1.879-.787.94-1.432 2.404-1.254 3.821 1.365.106 2.723-.742 3.575-1.8036"></path></svg>
-                    <div>
-                        <div class="text-[9px] font-bold leading-none mb-0.5">Download on the</div>
-                        <div class="text-[14px] font-black leading-none">App Store</div>
-                    </div>
-                </a>
-                <a href="#" class="h-[46px] w-[140px] bg-black rounded-lg text-white flex items-center px-3 hover:scale-105 transition-transform border border-white/20 shadow-md">
-                    <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M4 2v20l14.285-10L4 2zm15.714 9.143L22 12l-2.286.857-1.428-.857 1.428-.857zM5 4.5l11.428 8-11.428 8V4.5z"></path></svg>
-                    <div>
-                        <div class="text-[9px] font-bold leading-none mb-0.5">GET IT ON</div>
-                        <div class="text-[14px] font-black leading-none">Google Play</div>
-                    </div>
-                </a>
-            </div>
-            <div class="w-24 h-24 bg-white p-1.5 rounded-lg shadow-md shrink-0 hidden sm:block">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://maxinpro.com/app" alt="QR Code" class="w-full h-full">
-            </div>
-        </div>
-        
-        <!-- Mockup Phones -->
-        <div class="absolute left-1/2 -translate-x-1/2 min-[900px]:translate-x-0 min-[900px]:left-[40%] bottom-0 min-[900px]:-bottom-12 w-[350px] pointer-events-none hidden md:block">
-            <svg viewBox="0 0 400 300" fill="none" class="w-full h-auto translate-y-6">
-                <!-- Phone 1 (Back/Left) -->
-                <rect x="50" y="40" width="130" height="270" rx="20" fill="#0f172a" stroke="#334155" stroke-width="4"/>
-                <rect x="56" y="46" width="118" height="258" rx="14" fill="#ffffff"/>
-                <rect x="56" y="46" width="118" height="40" rx="14" fill="#0a7cff"/>
-                <rect x="64" y="96" width="102" height="150" rx="8" fill="#f1f5f9"/>
-                <circle cx="115" cy="52" r="3" fill="#0f172a"/>
-                <!-- Phone 2 (Front/Right) -->
-                <rect x="140" y="20" width="140" height="290" rx="22" fill="#0f172a" stroke="#475569" stroke-width="5" transform="rotate(5 140 20)"/>
-                <rect x="146" y="26" width="128" height="278" rx="16" fill="#ffffff" transform="rotate(5 140 20)"/>
-                <rect x="146" y="26" width="128" height="44" rx="16" fill="#0a7cff" transform="rotate(5 140 20)"/>
-                <rect x="156" y="80" width="108" height="160" rx="8" fill="#f8fafc" transform="rotate(5 140 20)"/>
-                <rect x="166" y="90" width="88" height="80" rx="4" fill="#e2e8f0" transform="rotate(5 140 20)"/>
-                <rect x="166" y="180" width="60" height="8" rx="2" fill="#94a3b8" transform="rotate(5 140 20)"/>
-                <rect x="166" y="196" width="40" height="6" rx="2" fill="#cbd5e1" transform="rotate(5 140 20)"/>
-                <circle cx="210" cy="32" r="4" fill="#0f172a" transform="rotate(5 140 20)"/>
-            </svg>
-        </div>
+    <div class="rounded-3xl overflow-hidden shadow-xl w-full">
+        <a href="#" class="block w-full h-full hover:opacity-95 transition-opacity">
+            <img src="{{ asset('images/banner-maxinpro.png') }}" alt="Download Aplikasi MaxinPro" class="w-full h-auto object-cover">
+        </a>
     </div>
 </section>
 
