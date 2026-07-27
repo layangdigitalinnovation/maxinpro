@@ -16,7 +16,7 @@ class Project extends Model
 
     protected $fillable = [
         'name', 'slug', 'developer_id', 'area_id', 'property_type_id', 'description', 'status',
-        'price_from', 'units_available', 'cover_image', 'is_featured', 'published_at', 'priority_order', 'sort_order', 'is_published',
+        'price_from', 'units_available', 'cover_image', 'is_featured', 'published_at', 'priority_order', 'sort_order', 'is_published', 'youtube_url'
     ];
 
     protected $casts = [
