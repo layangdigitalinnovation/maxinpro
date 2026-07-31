@@ -24,13 +24,13 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        User::create([
+        $admin = User::create([
             'name' => 'Admin MaxinPro',
             'email' => 'admin@maxinpro.com',
             'password' => bcrypt('ChangeThisPassword123!'),
-            'role' => 'admin',
             'email_verified_at' => now(),
         ]);
+        $admin->assignRole('admin');
 
         $types = collect(['Rumah', 'Apartemen', 'Ruko / Rukan', 'Tanah'])
             ->map(fn ($name) => PropertyType::create(['name' => $name, 'slug' => Str::slug($name)]));
@@ -60,9 +60,9 @@ class DatabaseSeeder extends Seeder
                 'name' => $a['name'],
                 'email' => $a['email'],
                 'password' => 'ChangeThisPassword123!',
-                'role' => 'agent',
                 'email_verified_at' => now(),
             ]);
+            $user->assignRole('agent');
 
             return Agent::create([
                 'user_id' => $user->id,

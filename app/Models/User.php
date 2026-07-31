@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use PragmaRX\Google2FA\Google2FA;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -17,13 +18,12 @@ class User extends Authenticatable implements MustVerifyEmail
     // (hasVerifiedEmail, markEmailAsVerified, getEmailForVerification, etc.)
     // required by the MustVerifyEmail interface above — the interface alone
     // has no method bodies, so this trait is NOT optional.
-    use HasFactory, Notifiable, MustVerifyEmailMethods;
+    use HasFactory, Notifiable, MustVerifyEmailMethods, HasRoles;
 
     protected $fillable = [
         'name',
         'email',
         'password',
-        'role',
         'email_verified_at',
     ];
 
@@ -49,12 +49,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isAdmin(): bool
     {
-        return $this->role === 'admin';
+        return $this->hasRole('admin');
     }
 
     public function isAgent(): bool
     {
-        return $this->role === 'agent';
+        return $this->hasRole('agent');
     }
 
     public function hasTwoFactorEnabled(): bool

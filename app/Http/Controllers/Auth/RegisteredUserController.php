@@ -35,8 +35,8 @@ class RegisteredUserController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => $validated['password'],
-            'role' => 'customer',
         ]);
+        $user->assignRole('customer');
 
         event(new Registered($user));
         $user->sendEmailVerificationNotification();

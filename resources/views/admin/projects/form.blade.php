@@ -26,10 +26,10 @@
         @method('PUT')
     @endif
 
-    <div class="bg-white border border-brand-line rounded-2xl p-6 grid grid-cols-2 gap-6">
-        <h2 class="col-span-2 text-brand-navy font-black text-[18px]">Informasi Umum</h2>
+    <div class="bg-white border border-brand-line rounded-2xl p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <h2 class="md:col-span-2 text-brand-navy font-black text-[18px]">Informasi Umum</h2>
 
-        <div class="col-span-2">
+        <div class="md:col-span-2">
             <label class="block text-sm font-bold text-brand-navy mb-2">Nama Project</label>
             <input type="text" name="name" value="{{ old('name', $project->name) }}" class="w-full border border-brand-line rounded-lg px-4 py-2 focus:ring-brand-blue" required>
         </div>
@@ -103,12 +103,12 @@
             <div class="text-[11px] text-[#7a8399] mt-1">Angka lebih kecil tampil lebih dulu.</div>
         </div>
 
-        <div class="col-span-2">
+        <div class="md:col-span-2">
             <label class="block text-sm font-bold text-brand-navy mb-2">Deskripsi Lengkap</label>
             <textarea id="editor-description" name="description" rows="5" class="w-full border border-brand-line rounded-lg px-4 py-2 focus:ring-brand-blue">{{ old('description', $project->description) }}</textarea>
         </div>
 
-        <div class="col-span-2">
+        <div class="md:col-span-2">
             <label class="flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" name="is_featured" value="1" {{ old('is_featured', $project->is_featured) ? 'checked' : '' }} class="rounded border-gray-300 text-brand-blue focus:ring-brand-blue">
                 <span class="text-sm font-bold text-brand-navy">Tampilkan sebagai Project Unggulan (Featured)</span>

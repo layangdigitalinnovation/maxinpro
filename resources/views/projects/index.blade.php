@@ -42,7 +42,7 @@
             <h2 class="text-[21px] font-black mb-2">Punya project baru untuk dipasarkan?</h2>
             <p class="text-[13px] font-semibold opacity-90">Jadi developer partner MaxinPro dan jangkau ribuan calon pembeli aktif.</p>
         </div>
-        <a href="https://wa.me/6281112345678" target="_blank" rel="noopener" class="h-12 px-6 rounded-[10px] bg-white text-brand-navy font-extrabold inline-flex items-center">Hubungi Tim Kami</a>
+        <a href="https://wa.me/{{ setting('whatsapp_number', '6281112345678') }}" target="_blank" rel="noopener" class="h-12 px-6 rounded-[10px] bg-white text-brand-navy font-extrabold inline-flex items-center">Hubungi Tim Kami</a>
     </div>
 </section>
 @endsection

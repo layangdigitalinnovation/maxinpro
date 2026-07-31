@@ -12,9 +12,12 @@ use App\Http\Controllers\Admin\DeveloperController as AdminDeveloperController;
 use App\Http\Controllers\Admin\LeadController as AdminLeadController;
 use App\Http\Controllers\Admin\ListingController as AdminListingController;
 use App\Http\Controllers\Admin\PartnerBankController as AdminPartnerBankController;
+use App\Http\Controllers\Admin\PermissionController as AdminPermissionController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
 use App\Http\Controllers\Admin\PropertyTypeController as AdminPropertyTypeController;
+use App\Http\Controllers\Admin\RoleController as AdminRoleController;
 use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Agent\DashboardController as AgentDashboardController;
 use App\Http\Controllers\Agent\ListingController as AgentListingController;
 use App\Http\Controllers\AreaLandingController;
@@ -202,6 +205,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::resource('areas', AdminAreaController::class)->except(['show']);
     Route::resource('developers', AdminDeveloperController::class)->except(['show']);
     Route::resource('property-types', AdminPropertyTypeController::class)->except(['show'])->parameters(['property-types' => 'propertyType']);
+    Route::resource('users', AdminUserController::class)->except(['show']);
+    Route::resource('roles', AdminRoleController::class)->except(['show']);
+    Route::resource('permissions', AdminPermissionController::class)->except(['show']);
     Route::resource('articles', AdminArticleController::class)->except(['show']);
     Route::resource('testimonials', AdminTestimonialController::class)->except(['show']);
     Route::resource('partner-banks', AdminPartnerBankController::class)->except(['show'])->parameters(['partner-banks' => 'partnerBank']);
@@ -226,5 +232,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
 */
 Route::prefix('agent')->name('agent.')->middleware(['auth', 'role:agent'])->group(function () {
     Route::get('/dashboard', [AgentDashboardController::class, 'index'])->name('dashboard');
+    Route::patch('/listings/{listing}/order', [AgentListingController::class, 'updateOrderAjax'])->name('listings.update-order-ajax');
+    Route::patch('/listings/{listing}/publish', [AgentListingController::class, 'updatePublishAjax'])->name('listings.update-publish-ajax');
     Route::resource('listings', AgentListingController::class)->except(['show']);
 });

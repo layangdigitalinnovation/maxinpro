@@ -17,7 +17,7 @@ class EnsureUserHasRole
         $user = $request->user();
 
         abort_if(!$user, 401);
-        abort_unless(in_array($user->role, $roles, true), 403, 'Anda tidak memiliki akses ke halaman ini.');
+        abort_unless($user->hasAnyRole($roles), 403, 'Anda tidak memiliki akses ke halaman ini.');
 
         return $next($request);
     }

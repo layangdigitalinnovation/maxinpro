@@ -100,7 +100,7 @@
                 </div>
             </div>
             
-            <a href="https://wa.me/6281112345678" target="_blank" rel="noopener" 
+            <a href="https://wa.me/{{ setting('whatsapp_number', '6281112345678') }}" target="_blank" rel="noopener" 
                class="w-full flex items-center justify-center gap-2 h-[56px] rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 hover:to-emerald-300 text-brand-navy font-black text-[15px] shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_25px_rgba(16,185,129,0.5)] transition-all active:scale-[0.98]">
                 Ajukan KPR Sekarang
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>

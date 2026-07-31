@@ -44,9 +44,9 @@ class AgentController extends Controller
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'password' => $temporaryPassword, // hashed automatically via the User model cast
-                'role' => 'agent',
                 'email_verified_at' => now(), // admin-created & trusted — never goes through the verification email flow
             ]);
+            $user->assignRole('agent');
 
             Agent::create([
                 'user_id' => $user->id,

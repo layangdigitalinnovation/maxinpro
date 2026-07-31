@@ -54,7 +54,15 @@
 
         <div class="col-span-2">
             <label class="block text-sm font-bold text-brand-navy mb-2">Isi Artikel (Body)</label>
-            <textarea name="body" rows="12" class="w-full border border-brand-line rounded-lg px-4 py-2 focus:ring-brand-blue" required>{{ old('body', $article->body) }}</textarea>
+            <textarea name="body" id="article-body" rows="12" class="w-full border border-brand-line rounded-lg px-4 py-2 focus:ring-brand-blue" required>{{ old('body', $article->body) }}</textarea>
+        </div>
+
+        <div class="col-span-2 mt-4">
+            <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" name="publish_now" value="1" {{ old('publish_now', $article->published_at) ? 'checked' : '' }} class="w-5 h-5 text-brand-blue border-brand-line rounded focus:ring-brand-blue">
+                <span class="text-sm font-bold text-brand-navy">Publikasikan Artikel Ini (Tampil di Beranda)</span>
+            </label>
+            <div class="text-xs text-gray-500 mt-1 pl-7">Jika tidak dicentang, artikel hanya akan disimpan sebagai Draft dan tidak tampil di publik.</div>
         </div>
     </div>
 
@@ -64,4 +72,15 @@
         </button>
     </div>
 </form>
+
+@push('scripts')
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('article-body', {
+        height: 400,
+        removeButtons: 'PasteFromWord',
+        versionCheck: false
+    });
+</script>
+@endpush
 @endsection

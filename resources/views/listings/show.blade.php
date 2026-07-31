@@ -117,7 +117,7 @@
                 </div>
             </div>
         @endif
-        <a href="https://wa.me/{{ setting('whatsapp_number', '6281112345678') }}?text={{ urlencode('Halo, saya tertarik dengan properti: ' . $listing->title) }}" target="_blank" rel="noopener"
+        <a href="https://wa.me/{{ setting('whatsapp_number', '6281112345678') }}?text={{ urlencode('Hai, saya tertarik dengan informasi lokasi ' . $listing->title . '. Mohon informasi nya terkait unit tersebut: ' . route('listings.show', $listing)) }}" target="_blank" rel="noopener"
            class="w-full inline-flex items-center justify-center h-12 rounded-[10px] bg-gradient-to-r from-[#0069ff] to-[#004de7] text-white font-extrabold text-[13.5px]">
             Hubungi via WhatsApp
         </a>

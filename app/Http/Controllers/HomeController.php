@@ -28,7 +28,7 @@ class HomeController extends Controller
 
         $popularAreas = Area::query()
             ->where('is_popular', true)
-            ->take(6)
+            ->take(5)
             ->get();
 
         $articles = Article::query()
@@ -40,7 +40,7 @@ class HomeController extends Controller
         $testimonials = Testimonial::query()
             ->active()
             ->latest()
-            ->take(3)
+            ->take(10)
             ->get();
 
         $stats = [

@@ -34,7 +34,7 @@
             ['label' => 'Properti Aktif', 'value' => '9+'],
             ['label' => 'Agen Profesional', 'value' => '3+'],
             ['label' => 'Project Baru', 'value' => '3+'],
-            ['label' => 'Berdiri Sejak', 'value' => '2011'],
+            ['label' => 'Berdiri Sejak', 'value' => '2022'],
         ] as $stat)
             <div class="bg-white rounded-3xl p-8 text-center shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-brand-line/50 transition-transform duration-300 hover:-translate-y-1">
                 <div class="text-[36px] min-[900px]:text-[48px] font-black text-transparent bg-clip-text bg-gradient-to-br from-brand-blue to-purple-600 mb-2 drop-shadow-sm tracking-tighter">{{ $stat['value'] }}</div>

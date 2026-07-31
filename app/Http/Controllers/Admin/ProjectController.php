@@ -194,6 +194,7 @@ class ProjectController extends Controller
             'cover_image' => ['nullable', 'image', 'max:2048'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
             'is_published' => ['nullable', 'boolean'],
+            'youtube_url' => ['nullable', 'url', 'max:255'],
         ]);
 
         return array_merge($validated, [

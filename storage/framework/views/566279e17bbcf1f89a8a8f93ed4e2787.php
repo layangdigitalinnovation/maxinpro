@@ -93,8 +93,8 @@
             
             <div class="flex items-center gap-3 flex-wrap mt-5 px-2">
                 <span class="text-[12.5px] font-bold text-[#7a8399]">Pencarian Populer :</span>
-                <?php $__currentLoopData = ['BSD City', 'Bintaro', 'Alam Sutera', 'Gading Serpong', 'Jakarta Selatan']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $chip): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <a href="<?php echo e(route('listings.index', ['q' => $chip])); ?>" class="text-[12px] font-extrabold px-3.5 h-8 inline-flex items-center rounded-full bg-[#f4f7fb] text-[#3a455e] hover:bg-brand-soft hover:text-brand-blue transition-colors"><?php echo e($chip); ?></a>
+                <?php $__currentLoopData = $popularAreas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $area): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <a href="<?php echo e(route('listings.index', ['q' => $area->name])); ?>" class="text-[12px] font-extrabold px-3.5 h-8 inline-flex items-center rounded-full bg-[#f4f7fb] text-[#3a455e] hover:bg-brand-soft hover:text-brand-blue transition-colors"><?php echo e($area->name); ?></a>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
         </form>
@@ -243,24 +243,7 @@
 </section>
 
 
-<section class="max-w-[1280px] mx-auto px-8 mb-16">
-    <div class="flex items-center justify-between mb-4">
-        <h2 class="text-brand-navy font-black text-[24px] min-[900px]:text-[26px]">Area Populer</h2>
-        <a href="<?php echo e(route('listings.index')); ?>" class="text-[13px] font-extrabold text-brand-blue flex items-center gap-1 hover:underline">Lihat Semua →</a>
-    </div>
-    <div class="grid grid-cols-2 min-[700px]:grid-cols-3 min-[1000px]:grid-cols-6 gap-4">
-        <?php $__currentLoopData = $popularAreas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $area): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <a href="<?php echo e(route('area-landing.show', $area)); ?>" class="relative rounded-[20px] overflow-hidden aspect-square group shadow-sm">
-                <img src="<?php echo e($area->image_path ? asset('storage/'.$area->image_path) : asset('images/placeholder-property.jpg')); ?>" alt="<?php echo e($area->name); ?>" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                <div class="absolute inset-0 bg-gradient-to-t from-brand-navy/90 to-transparent opacity-80"></div>
-                <div class="absolute bottom-4 left-4 text-white">
-                    <strong class="block text-[14px] font-black mb-0.5"><?php echo e($area->name); ?></strong>
-                    <span class="text-[11.5px] font-extrabold text-white/80"><?php echo e($area->property_count); ?>+ Properti</span>
-                </div>
-            </a>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-    </div>
-</section>
+
 
 
 <section class="max-w-[1280px] mx-auto px-8 mb-8 mt-12">
@@ -328,37 +311,37 @@
 
 <section class="max-w-[1280px] mx-auto px-8 mb-12">
     <div class="bg-gradient-to-r from-[#06143b] to-[#001347] rounded-3xl py-8 px-6 text-white grid grid-cols-2 md:grid-cols-4 gap-6 divide-x divide-white/20 shadow-xl border border-brand-line/10">
-        <!-- Stat 1 -->
-        <div class="flex flex-col items-center justify-center text-center px-4">
-            <div class="flex items-center gap-3 mb-1">
-                <svg class="w-8 h-8 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                <div class="text-[26px] font-black leading-none">25.000+</div>
+        <!-- Feature 1 -->
+        <div class="flex flex-col items-center justify-center text-center px-2">
+            <div class="flex items-center gap-2 mb-1.5">
+                <svg class="w-6 h-6 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 15L15 9M9.5 9h.01M14.5 15h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <div class="text-[17px] font-black leading-none">Diskon Developer</div>
             </div>
-            <div class="text-[13px] font-bold text-white/80">Properti Aktif</div>
+            <div class="text-[13px] font-medium text-white/80">Harga khusus unit primary</div>
         </div>
-        <!-- Stat 2 -->
-        <div class="flex flex-col items-center justify-center text-center px-4">
-            <div class="flex items-center gap-3 mb-1">
-                <svg class="w-8 h-8 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                <div class="text-[26px] font-black leading-none">120+</div>
+        <!-- Feature 2 -->
+        <div class="flex flex-col items-center justify-center text-center px-2">
+            <div class="flex items-center gap-2 mb-1.5">
+                <svg class="w-6 h-6 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                <div class="text-[17px] font-black leading-none">Virtual Tour</div>
             </div>
-            <div class="text-[13px] font-bold text-white/80">Agen Profesional</div>
+            <div class="text-[13px] font-medium text-white/80">Video call via WhatsApp</div>
         </div>
-        <!-- Stat 3 -->
-        <div class="flex flex-col items-center justify-center text-center px-4">
-            <div class="flex items-center gap-3 mb-1">
-                <svg class="w-8 h-8 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-                <div class="text-[26px] font-black leading-none">300+</div>
+        <!-- Feature 3 -->
+        <div class="flex flex-col items-center justify-center text-center px-2">
+            <div class="flex items-center gap-2 mb-1.5">
+                <svg class="w-6 h-6 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.956 11.956 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                <div class="text-[17px] font-black leading-none">Properti Tersaring</div>
             </div>
-            <div class="text-[13px] font-bold text-white/80">Project Baru</div>
+            <div class="text-[13px] font-medium text-white/80">Disurvei sebelum ditawarkan</div>
         </div>
-        <!-- Stat 4 -->
-        <div class="flex flex-col items-center justify-center text-center px-4">
-            <div class="flex items-center gap-3 mb-1">
-                <svg class="w-8 h-8 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <div class="text-[26px] font-black leading-none">12.000+</div>
+        <!-- Feature 4 -->
+        <div class="flex flex-col items-center justify-center text-center px-2">
+            <div class="flex items-center gap-2 mb-1.5">
+                <svg class="w-6 h-6 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                <div class="text-[17px] font-black leading-none">Pendampingan KPR</div>
             </div>
-            <div class="text-[13px] font-bold text-white/80">Happy Customer</div>
+            <div class="text-[13px] font-medium text-white/80">Sampai akad selesai</div>
         </div>
     </div>
 </section>
@@ -371,50 +354,22 @@
     </div>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-        <!-- Artikel 1 -->
-        <a href="#" class="bg-white border border-brand-line rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all group">
-            <div class="aspect-[1.6/1] relative bg-brand-soft overflow-hidden">
-                <img src="<?php echo e(asset('images/hero-skyline.png')); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                <div class="absolute left-3 top-3 h-6 px-3 bg-white/90 backdrop-blur rounded-full flex items-center text-[10px] font-black text-brand-blue uppercase shadow-sm">TIPS</div>
+        <?php $__empty_1 = true; $__currentLoopData = $articles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $article): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+            <a href="<?php echo e(route('articles.show', $article->slug)); ?>" class="bg-white border border-brand-line rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col h-full">
+                <div class="aspect-[1.6/1] relative bg-brand-soft overflow-hidden shrink-0">
+                    <img src="<?php echo e($article->cover_image ? asset('storage/' . $article->cover_image) : asset('images/placeholder-property.jpg')); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="<?php echo e($article->title); ?>">
+                    <div class="absolute left-3 top-3 h-6 px-3 bg-white/90 backdrop-blur rounded-full flex items-center text-[10px] font-black text-brand-blue uppercase shadow-sm"><?php echo e($article->category ?? 'Berita'); ?></div>
+                </div>
+                <div class="p-4 flex flex-col flex-1">
+                    <h3 class="text-[15px] font-black text-brand-navy leading-snug mb-2 group-hover:text-brand-blue transition-colors line-clamp-2"><?php echo e($article->title); ?></h3>
+                    <div class="text-[12px] font-bold text-[#7a8399] mt-auto"><?php echo e($article->published_at ? $article->published_at->translatedFormat('d M Y') : $article->created_at->translatedFormat('d M Y')); ?></div>
+                </div>
+            </a>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+            <div class="col-span-full bg-white border border-brand-line rounded-2xl p-8 text-center">
+                <p class="text-brand-muted text-[14px] font-medium">Belum ada artikel yang diterbitkan.</p>
             </div>
-            <div class="p-4">
-                <h3 class="text-[15px] font-black text-brand-navy leading-snug mb-2 group-hover:text-brand-blue transition-colors">5 Tips Membeli Rumah Pertama untuk Keluarga</h3>
-                <div class="text-[12px] font-bold text-[#7a8399]">17 Mei 2024</div>
-            </div>
-        </a>
-        <!-- Artikel 2 -->
-        <a href="#" class="bg-white border border-brand-line rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all group">
-            <div class="aspect-[1.6/1] relative bg-brand-soft overflow-hidden">
-                <img src="<?php echo e(asset('images/hero-skyline.png')); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                <div class="absolute left-3 top-3 h-6 px-3 bg-white/90 backdrop-blur rounded-full flex items-center text-[10px] font-black text-brand-blue uppercase shadow-sm">INVESTASI</div>
-            </div>
-            <div class="p-4">
-                <h3 class="text-[15px] font-black text-brand-navy leading-snug mb-2 group-hover:text-brand-blue transition-colors">Investasi Properti di 2024 Masih Menguntungkan?</h3>
-                <div class="text-[12px] font-bold text-[#7a8399]">15 Mei 2024</div>
-            </div>
-        </a>
-        <!-- Artikel 3 -->
-        <a href="#" class="bg-white border border-brand-line rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all group">
-            <div class="aspect-[1.6/1] relative bg-brand-soft overflow-hidden">
-                <img src="<?php echo e(asset('images/hero-skyline.png')); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                <div class="absolute left-3 top-3 h-6 px-3 bg-white/90 backdrop-blur rounded-full flex items-center text-[10px] font-black text-brand-blue uppercase shadow-sm">KPR</div>
-            </div>
-            <div class="p-4">
-                <h3 class="text-[15px] font-black text-brand-navy leading-snug mb-2 group-hover:text-brand-blue transition-colors">Cara Mengajukan KPR yang Disetujui Bank</h3>
-                <div class="text-[12px] font-bold text-[#7a8399]">12 Mei 2024</div>
-            </div>
-        </a>
-        <!-- Artikel 4 -->
-        <a href="#" class="bg-white border border-brand-line rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all group">
-            <div class="aspect-[1.6/1] relative bg-brand-soft overflow-hidden">
-                <img src="<?php echo e(asset('images/hero-skyline.png')); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                <div class="absolute left-3 top-3 h-6 px-3 bg-white/90 backdrop-blur rounded-full flex items-center text-[10px] font-black text-brand-blue uppercase shadow-sm">MARKET UPDATE</div>
-            </div>
-            <div class="p-4">
-                <h3 class="text-[15px] font-black text-brand-navy leading-snug mb-2 group-hover:text-brand-blue transition-colors">Tren Harga Properti di Jabodetabek</h3>
-                <div class="text-[12px] font-bold text-[#7a8399]">10 Mei 2024</div>
-            </div>
-        </a>
+        <?php endif; ?>
     </div>
 </section>
 
@@ -424,51 +379,38 @@
         <h2 class="text-brand-navy font-black text-[22px] min-[900px]:text-[24px]">Testimoni Pelanggan</h2>
         <a href="#" class="text-[13px] font-extrabold text-brand-blue flex items-center gap-1 hover:underline">Lihat Semua →</a>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Testi 1 -->
-        <div class="bg-[#f8fafc] rounded-3xl p-6 relative overflow-hidden group hover:shadow-md transition-shadow border border-brand-line/50">
-            <div class="absolute right-4 top-4 text-brand-line/40 font-serif text-8xl leading-none italic pointer-events-none group-hover:text-brand-blue/10 transition-colors">"</div>
-            <div class="flex items-center gap-4 mb-4 relative z-10">
-                <div class="w-14 h-14 rounded-full bg-brand-navy overflow-hidden shrink-0 border-2 border-white shadow-sm">
-                    <img src="https://i.pravatar.cc/150?img=1" alt="Dewi Lestari" class="w-full h-full object-cover">
+    <style>
+        .testimoni-card { width: 85vw; }
+        @media (min-width: 768px) { .testimoni-card { width: calc(50% - 12px); } }
+        @media (min-width: 1024px) { .testimoni-card { width: calc(33.333% - 16px); } }
+        @media (min-width: 1280px) { .testimoni-card { width: calc(25% - 18px); } }
+    </style>
+    <div class="relative group" id="testimoni-carousel-wrapper">
+        <div class="carousel-container flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden" id="testimoni-carousel">
+            <?php $__empty_1 = true; $__currentLoopData = $testimonials; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $testi): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                <div class="snap-start shrink-0 flex testimoni-card">
+                    <div class="bg-[#f8fafc] rounded-3xl p-6 relative overflow-hidden group hover:shadow-md transition-shadow border border-brand-line/50 w-full flex flex-col">
+                        <div class="absolute right-4 top-4 text-brand-line/40 font-serif text-8xl leading-none italic pointer-events-none group-hover:text-brand-blue/10 transition-colors">"</div>
+                        <div class="flex items-center gap-4 mb-4 relative z-10">
+                            <div class="w-14 h-14 rounded-full bg-brand-navy overflow-hidden shrink-0 border-2 border-white shadow-sm">
+                                <img src="<?php echo e($testi->photo_path ? asset('storage/' . $testi->photo_path) : 'https://ui-avatars.com/api/?name='.urlencode($testi->name).'&background=random'); ?>" alt="<?php echo e($testi->name); ?>" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="text-[15px] font-black text-brand-navy"><?php echo e($testi->name); ?></h4>
+                                <p class="text-[11.5px] font-bold text-[#7a8399] mb-1"><?php echo e($testi->city); ?></p>
+                                <div class="flex text-[#f59e0b] text-[12px]">
+                                    <?php for($i = 0; $i < $testi->rating; $i++): ?>★<?php endfor; ?>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-[13px] font-bold text-[#55617a] leading-relaxed relative z-10 flex-1"><?php echo e($testi->quote); ?></p>
+                    </div>
                 </div>
-                <div>
-                    <h4 class="text-[15px] font-black text-brand-navy">Dewi Lestari</h4>
-                    <p class="text-[11.5px] font-bold text-[#7a8399] mb-1">BSD City</p>
-                    <div class="flex text-[#f59e0b] text-[12px]">★★★★★</div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                <div class="w-full bg-[#f8fafc] rounded-3xl p-6 text-center border border-brand-line/50">
+                    <p class="text-brand-muted text-[14px] font-medium">Belum ada testimoni pelanggan.</p>
                 </div>
-            </div>
-            <p class="text-[13px] font-bold text-[#55617a] leading-relaxed relative z-10">Proses cari rumah jadi lebih mudah dan cepat. Agen MaxinPro sangat membantu dan profesional!</p>
-        </div>
-        <!-- Testi 2 -->
-        <div class="bg-[#f8fafc] rounded-3xl p-6 relative overflow-hidden group hover:shadow-md transition-shadow border border-brand-line/50">
-            <div class="absolute right-4 top-4 text-brand-line/40 font-serif text-8xl leading-none italic pointer-events-none group-hover:text-brand-blue/10 transition-colors">"</div>
-            <div class="flex items-center gap-4 mb-4 relative z-10">
-                <div class="w-14 h-14 rounded-full bg-brand-navy overflow-hidden shrink-0 border-2 border-white shadow-sm">
-                    <img src="https://i.pravatar.cc/150?img=11" alt="Andi Pratama" class="w-full h-full object-cover">
-                </div>
-                <div>
-                    <h4 class="text-[15px] font-black text-brand-navy">Andi Pratama</h4>
-                    <p class="text-[11.5px] font-bold text-[#7a8399] mb-1">Bintaro</p>
-                    <div class="flex text-[#f59e0b] text-[12px]">★★★★★</div>
-                </div>
-            </div>
-            <p class="text-[13px] font-bold text-[#55617a] leading-relaxed relative z-10">Dapat rumah sesuai kebutuhan dan budget. Terima kasih MaxinPro!</p>
-        </div>
-        <!-- Testi 3 -->
-        <div class="bg-[#f8fafc] rounded-3xl p-6 relative overflow-hidden group hover:shadow-md transition-shadow border border-brand-line/50">
-            <div class="absolute right-4 top-4 text-brand-line/40 font-serif text-8xl leading-none italic pointer-events-none group-hover:text-brand-blue/10 transition-colors">"</div>
-            <div class="flex items-center gap-4 mb-4 relative z-10">
-                <div class="w-14 h-14 rounded-full bg-brand-navy overflow-hidden shrink-0 border-2 border-white shadow-sm">
-                    <img src="https://i.pravatar.cc/150?img=9" alt="Siti Rahma" class="w-full h-full object-cover">
-                </div>
-                <div>
-                    <h4 class="text-[15px] font-black text-brand-navy">Siti Rahma</h4>
-                    <p class="text-[11.5px] font-bold text-[#7a8399] mb-1">Alam Sutera</p>
-                    <div class="flex text-[#f59e0b] text-[12px]">★★★★★</div>
-                </div>
-            </div>
-            <p class="text-[13px] font-bold text-[#55617a] leading-relaxed relative z-10">Layanan titip properti sangat membantu. Rumah saya terjual dalam 2 minggu!</p>
+            <?php endif; ?>
         </div>
     </div>
 </section>
@@ -527,6 +469,33 @@
             });
         }
     });
+
+    // Auto-scroll Testimoni
+    const testimoniCarousel = document.getElementById('testimoni-carousel');
+    if (testimoniCarousel) {
+        const scrollCard = () => {
+            const card = testimoniCarousel.querySelector('.snap-start');
+            if (!card) return;
+            const scrollAmount = card.offsetWidth + 24; // width + gap
+            
+            // if we are at the end, scroll back to start
+            if (testimoniCarousel.scrollLeft + testimoniCarousel.clientWidth >= testimoniCarousel.scrollWidth - 10) {
+                testimoniCarousel.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                testimoniCarousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        };
+
+        let autoScrollTestimoni = setInterval(scrollCard, 3000);
+
+        const testimoniWrapper = document.getElementById('testimoni-carousel-wrapper');
+        if (testimoniWrapper) {
+            testimoniWrapper.addEventListener('mouseenter', () => clearInterval(autoScrollTestimoni));
+            testimoniWrapper.addEventListener('mouseleave', () => {
+                autoScrollTestimoni = setInterval(scrollCard, 3000);
+            });
+        }
+    }
 </script>
 <?php $__env->stopPush(); ?>
 

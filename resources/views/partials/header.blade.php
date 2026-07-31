@@ -26,7 +26,7 @@
         </nav>
 
         <div class="flex-1 flex items-center justify-end gap-3">
-            <a href="https://wa.me/6281112345678" target="_blank" rel="noopener"
+            <a href="https://wa.me/{{ setting('whatsapp_number', '6281112345678') }}" target="_blank" rel="noopener"
                class="hidden min-[900px]:inline-flex items-center gap-2 h-11 px-5 rounded-[10px] bg-brand-blue text-white text-[13px] font-extrabold shadow-[0_14px_26px_rgba(0,87,255,.24)]">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                 Hubungi Kami
@@ -63,7 +63,28 @@
                     {{ $link['label'] }}
                 </a>
             @endforeach
-            <a href="https://wa.me/6281112345678" target="_blank" rel="noopener" class="mt-2 inline-flex items-center justify-center h-11 rounded-[10px] bg-gradient-to-r from-[#0069ff] to-[#004de7] text-white text-[13px] font-extrabold">
+
+            <div class="h-px bg-brand-line my-2"></div>
+
+            @auth
+                <div class="flex flex-col gap-2">
+                    @if (auth()->user()->isAdmin())
+                        <a href="{{ route('admin.dashboard') }}" class="inline-flex items-center justify-center h-11 rounded-[10px] bg-brand-blue/10 text-brand-blue text-[13px] font-extrabold">Panel Admin</a>
+                    @elseif (auth()->user()->isAgent())
+                        <a href="{{ route('agent.dashboard') }}" class="inline-flex items-center justify-center h-11 rounded-[10px] bg-brand-blue/10 text-brand-blue text-[13px] font-extrabold">Panel Agen</a>
+                    @else
+                        <a href="{{ route('account.saved-listings.index') }}" class="inline-flex items-center justify-center h-11 rounded-[10px] bg-brand-blue/10 text-brand-blue text-[13px] font-extrabold">Favorit Saya</a>
+                    @endif
+                    <form action="{{ route('logout') }}" method="POST" class="flex flex-col">
+                        @csrf
+                        <button type="submit" class="inline-flex items-center justify-center h-11 rounded-[10px] border border-brand-line text-brand-muted text-[13px] font-extrabold w-full">Keluar</button>
+                    </form>
+                </div>
+            @else
+                <a href="{{ route('login') }}" class="inline-flex items-center justify-center h-11 rounded-[10px] border-2 border-brand-blue text-brand-blue text-[13px] font-extrabold">Masuk</a>
+            @endauth
+
+            <a href="https://wa.me/{{ setting('whatsapp_number', '6281112345678') }}" target="_blank" rel="noopener" class="mt-2 inline-flex items-center justify-center h-11 rounded-[10px] bg-gradient-to-r from-[#0069ff] to-[#004de7] text-white text-[13px] font-extrabold">
                 Hubungi Kami
             </a>
         </div>
